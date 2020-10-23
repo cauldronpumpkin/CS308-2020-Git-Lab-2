@@ -14,15 +14,34 @@ def process_data(path):
         (lists, num_of_sentences) = list_of_sentences(file)
         (dict, num_of_words) =  split_and_store(lists)
         sorted_dict = {k: v for k, v in sorted(dict.items(), key=lambda item: item[1])}
+        summarise(sorted_dict)
     except:
         return
+
+def summarise(sorted_dict):
+    global num_of_lines, num_of_sentences, num_of_words
+    
+    window = Toplevel()
+    window.geometry("300x200")
+    window.title("Summary of the text file")
+
+    mylist = Listbox(window, width=20, height=10)
+    mylist.pack(padx=10, pady=10, fill="both", expand=True)
+
+    mylist.insert(END, "Number of lines: {}".format(num_of_lines))
+    mylist.insert(END, "Number of sentences: {}".format(num_of_sentences))
+    mylist.insert(END, "Number of words: {}".format(num_of_words))
+
+    root.protocol("WM_DELETE_WINDOW", plot(list(sorted_dict.keys()), list(sorted_dict.values())))
+
+    window.mainloop()
 
 def plot(X, Y): 
     plot_window = Toplevel()
     plot_window.geometry("1900x1000")
     plot_window.title("Plot for words")
 
-    fig = Figure(figsize = (19, 10), dpi = 100)     
+    fig = Figure(figsize = (19, 10), dpi = 100) 
 
     plot1 = fig.add_subplot(212)
     plot2 = fig.add_subplot(211)
