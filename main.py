@@ -69,6 +69,31 @@ def plot(X, Y):
     canvas.get_tk_widget().pack()
     plot_window.mainloop() 
 
+def print_keyword_sentences(sent):
+    window = Toplevel()
+    window.geometry("500x500")
+    window.title("Sentences found after keyword search")
+
+    scrollbar = Scrollbar(window, orient="vertical")
+    scrollbar.pack( side = "right", fill = "y" )
+
+    mylist = Listbox(window, width=20, height=10, yscrollcommand = scrollbar.set)
+    mylist.pack(padx=10, pady=10, fill="both", expand=True)
+    for line in sent:
+        mylist.insert(END, str(line))
+
+    window.mainloop() 
+
+def keyword_search():
+    try:
+        file = open(filepath.get(), 'r').read().splitlines()
+        lists,_ = list_of_sentences(file)
+        sets = get_keyword_set(keywordpath.get())
+        key_sentences = get_keyword_sentences(lists,sets)
+        print_keyword_sentences(key_sentences)
+    except:
+        return
+
 def refresh():
     if (filepath.get() == ""):
         messagebox.showerror("No File Found", "Please pick a file first.")  
@@ -81,6 +106,10 @@ def clear():
     filename.set("")
     keywordpath.set("")
     keywordname.set("")
+    dynamic_button['text'] = "Pick File"
+    dynamic_button['command'] = pick_file
+    dynamic_keyword_button['text'] = "Pick Keyword file"
+    dynamic_keyword_button['command'] = pick_keyword_file
 
 
 def pick_file(*args):
