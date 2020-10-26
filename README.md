@@ -15,6 +15,11 @@ Python 3,
 tikinter,
 matplotlib,
 gensim
+```
+pip3 install -r requirements.txt
+
+```
+
 
 ### How to run?
 
